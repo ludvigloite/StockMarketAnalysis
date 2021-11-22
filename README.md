@@ -2,6 +2,15 @@
 
 # Big Data
 
+## How to add dataset
+
+1. Download dataset from https://www.kaggle.com/borismarjanovic/price-volume-data-for-all-us-stocks-etfs
+
+2. Unzip the file, rename it "dataset".
+
+3. Add it to the same hierarchy level as README.md
+
+
 ## Sources
 
 https://www.kaggle.com/borismarjanovic/price-volume-data-for-all-us-stocks-etfs
