@@ -10,6 +10,7 @@ from keras.layers import *
 from sklearn.metrics import mean_squared_error
 from matplotlib import pyplot as plt
 
+
  
 #Function to create the input data and the corresponding labels to be predicted
 def split_sequence(sequence, n_steps_in, n_steps_out):
@@ -105,20 +106,20 @@ def inverse_transform(series, preds, scaler, n_test):
     return inverted
 
 def evaluate_predictions(test, preds, n_lag, n_seq):
-	for i in range(n_seq):
-		actual = [row[i] for row in test]
-		predicted = [pred[i] for pred in preds]
-		rmse = np.sqrt(mean_squared_error(actual, predicted))
-		print('t+%d RMSE: %f' % ((i+1), rmse))
+        for i in range(n_seq):
+            actual = [row[i] for row in test]
+            predicted = [pred[i] for pred in preds]
+            rmse = np.sqrt(mean_squared_error(actual, predicted))
+            print('t+%d RMSE: %f' % ((i+1), rmse))
         
 
 # plot the predictions in the context of the original dataset
-def plot_predictions(series, preds, n_test, test_index):
+def plot_predictions(series, preds, n_test, test_index, plot_name):
     assert test_index<len(preds) and test_index>=0, \
         f'Please input a valid test_index. Must be larger than 0 and less than {len(preds)}'
     
     x_lim = int(len(series) * 0.95)
-    y_lim_upper = np.max(preds) * 1.01
+    y_lim_upper = max(np.max(preds), np.max(series[x_lim:])) * 1.01
     y_lim_lower = min(np.min(series[x_lim:]), np.min(preds))*0.99
     
     # plot the entire dataset in blue
@@ -135,6 +136,6 @@ def plot_predictions(series, preds, n_test, test_index):
     # show the plot
     plt.axis([x_lim, len(series)+len(preds[0]), y_lim_lower, y_lim_upper])
     plt.legend()
-    plt.savefig("lstm_plot.png")
+    plt.savefig(plot_name)
     plt.show()
     return
